@@ -8,7 +8,8 @@
 
 Trong dự án này, Redux Store quản lý:
 - `auth`: Thông tin người dùng và trạng thái đăng nhập.
-- `dashboard`: Danh sách khách hàng và đơn hàng.
+- `dashboard`: Danh sách khách hàng và đơn hàng. 
+- `authSlice.js, dashboardSlice.js`: Lưu thông tin người dùng, token và trạng thái đăng nhập, Lưu danh sách khách hàng và đơn hàng.
 
 Các file liên quan:
 - `store/index.js`: Tạo Redux Store.
@@ -118,28 +119,43 @@ MainLayout.jsx
 
 ```text
 LoginForm.jsx
-      |
-      v
-useAuth()
-      |
-      v
-loginUser Action
-      |
-      v
+    ↓
+useAuth.js
+    ↓
+loginUser (createAsyncThunk)
+    ↓
 authService.js
-      |
-      v
-authSlice.js
-      |
-      v
+    ↓
+Backend API
+    ↓
+authSlice.js cập nhật state
+    ↓
 Redux Store
-      |
-      v
-ProtectedRoute.jsx
-      |
-      v
-Cho phép truy cập trang
-hoặc chuyển đến /login
+    ↓
+UI cập nhật
+```
+Vi du khac 
+```text
+src/
+├── pages/Login/Login.jsx
+│       ↓ hiển thị form
+├── features/auth/components/LoginForm.jsx
+│       ↓ gửi email + password
+├── features/auth/hooks/useAuth.js
+│       ↓ dispatch(loginUser(credentials))
+├── features/auth/authSlice.js
+│       ↓ gọi authService.login()
+├── features/auth/services/authService.js
+│       ↓ POST request
+│       ↓
+│   Backend API
+│       ↓ trả token + user
+├── features/auth/authSlice.js
+│       ↓ fulfilled / rejected
+├── store/index.js
+│       ↓ lưu state.auth
+└── components/layout/Header/Header.jsx
+        ↓ đọc user từ Redux Store
 ```
 
 Chức năng đăng nhập hiện sử dụng tài khoản demo và kiểm tra thông tin ngay trên frontend. `ProtectedRoute.jsx` kiểm tra trạng thái đăng nhập để điều hướng người dùng.

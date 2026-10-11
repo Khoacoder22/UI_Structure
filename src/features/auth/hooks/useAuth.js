@@ -13,7 +13,8 @@ export default function useAuth() {
   const dispatch = useDispatch()
 
   const user = useSelector(selectCurrentUser)
-
+  
+  //Lay du lieu tu Store Redux
   const isAuthenticated = useSelector(
     selectIsAuthenticated
   )
