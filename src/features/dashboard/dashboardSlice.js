@@ -75,6 +75,7 @@ const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
 
+  // lay du lieu khach hang tu payload 
   reducers: {
     addCustomer: (state, action) => {
       state.customers.unshift(action.payload)
